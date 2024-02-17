@@ -81,16 +81,16 @@ const ScanDisplay = ({ scan, onReturnToLiveFeed }) => {
 
 const NutritionFacts = () => {
   // Basic editable nutrition facts
-  const [itemName, getItemName] = useState(1); 
-  const [servingSize, setServingSize] = useState(1);
-  const [calories, setCalories] = useState(100);
-  const [totalFat, setTotalFat] = useState('5g');
-  const [cholesterol, setCholesterol] = useState('10mg');
-  const [protein, setProtein] = useState('10g');
-  const [sodium, setSodium] = useState('10mg');
-  const [carbs, setCarbs] = useState('10g');
-  const [sugars, setSugars] = useState('10g');
-  const [caffeine, setCaffeine] = useState('10mg');
+  const [itemName, getItemName] = useState(null); 
+  const [servingSize, setServingSize] = useState(null);
+  const [calories, setCalories] = useState(null);
+  const [totalFat, setTotalFat] = useState('g');
+  const [cholesterol, setCholesterol] = useState('mg');
+  const [protein, setProtein] = useState('g');
+  const [sodium, setSodium] = useState('mg');
+  const [carbs, setCarbs] = useState('g');
+  const [sugars, setSugars] = useState('g');
+  const [caffeine, setCaffeine] = useState('mg');
 
 
   return (
