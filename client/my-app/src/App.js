@@ -33,18 +33,19 @@ const CameraPreview = ({ onTakeScreenshot }) => {
     }, 1000);
   };
 
-  useEffect(() => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream;
-          }
-        })
-        .catch((err) => alert('Please enable camera access'));
-    }
-  }, []);
+	useEffect(() => {
+		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+			navigator.mediaDevices.getUserMedia({
+				video: { facingMode: 'environment' } // Use the back camera
+			})
+				.then(stream => {
+					if (videoRef.current) {
+						videoRef.current.srcObject = stream;
+					}
+				})
+				.catch(err => alert('Please enable camera access'));
+		}
+	}, []);
 
   return (
     <div>
