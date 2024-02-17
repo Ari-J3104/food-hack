@@ -5,6 +5,32 @@ import './App.css';
 
 const CameraPreview = ({ onTakeScreenshot }) => {
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+
+  const takeScreenshot = () => {
+    setLoading(true); // Set loading state to true
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    if (canvas && video) {
+	canvas.width = video.videoWidth;
+	canvas.height = video.videoHeight;
+	canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+	}
+
+		const data = canvas.toDataURL('image/png');
+		var response = fetch('/api/uploadScreenshot', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ image: data })
+		})
+    // Simulate asynchronous task (e.g., API call) with setTimeout
+    setTimeout(() => {
+      setLoading(false); // Set loading state to false after the task is done
+    }, 1000);
+  };
 
   useEffect(() => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -14,14 +40,14 @@ const CameraPreview = ({ onTakeScreenshot }) => {
             videoRef.current.srcObject = stream;
           }
         })
-        .catch(err => console.error(err));
+        .catch(err => alert('Please enable camera access'));
     }
   }, []);
 
   return (
     <div>
       <h2>Video feed:</h2>
-      <video ref={videoRef} autoPlay />
+		  <video ref={videoRef} autoplay loop muted webkit-playsinline playsinline />
       <button onClick={onTakeScreenshot}>Take Screenshot</button>
     </div>
   );

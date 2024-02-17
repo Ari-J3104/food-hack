@@ -19,11 +19,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Path: backend/routes/api.js
-app.post('/api/upload', upload.single('image'), function (req, res, next) {
+app.post('/api/uploadFile', upload.single('image'), function (req, res, next) {
 	console.log('API works');
 	console.log(req.file);
 	console.log("req.body")
 	console.log(req.body)
+});
+
+app.post('/api/uploadScreenshot', function (req, res) {
+	console.log('API works');
+	console.log(req.body);
 });
 
 

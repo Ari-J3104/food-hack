@@ -33,6 +33,11 @@
   animation: spin 1s linear infinite; /* CSS animation for spinning */
 }
 
+html,
+body {
+	overflow-x: hidden;
+}
+
 /* Keyframes for spinning animation */
 @keyframes spin {
   from {
