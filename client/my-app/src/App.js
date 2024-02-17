@@ -9,48 +9,55 @@ const CameraPreview = ({ onTakeScreenshot }) => {
   const [loading, setLoading] = useState(false);
 
   const takeScreenshot = () => {
-    setLoading(true); // Set loading state to true
+    setLoading(true);
     const canvas = canvasRef.current;
     const video = videoRef.current;
-    if (canvas && video) {
-	canvas.width = video.videoWidth;
-	canvas.height = video.videoHeight;
-	canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-	}
 
-		const data = canvas.toDataURL('image/png');
-		var response = fetch('/api/uploadScreenshot', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ image: data })
-		})
-    // Simulate asynchronous task (e.g., API call) with setTimeout
+    if (canvas && video) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+    }
+
+    const data = canvas.toDataURL('image/png');
+    fetch('/api/uploadScreenshot', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ image: data }),
+    });
+
     setTimeout(() => {
-      setLoading(false); // Set loading state to false after the task is done
+      setLoading(false);
     }, 1000);
   };
 
-	useEffect(() => {
-		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-			navigator.mediaDevices.getUserMedia({
-				video: { facingMode: 'environment' } // Use the back camera
-			})
-				.then(stream => {
-					if (videoRef.current) {
-						videoRef.current.srcObject = stream;
-					}
-				})
-				.catch(err => alert('Please enable camera access'));
-		}
-	}, []);
+  useEffect(() => {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        })
+        .catch((err) => alert('Please enable camera access'));
+    }
+  }, []);
 
   return (
     <div>
       <h2>Video feed:</h2>
-		  <video ref={videoRef} autoPlay playsInline className='video'/>
-      <button onClick={onTakeScreenshot}>Take Screenshot</button>
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        style={{ maxWidth: '100%', width: '100%' }}
+      />
+      <button onClick={takeScreenshot}>Take Screenshot</button>
+      {loading && <img src="/loading.png" alt="loading" className="loading-image" />}
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
     </div>
   );
 };
