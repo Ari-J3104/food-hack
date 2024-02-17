@@ -5,7 +5,12 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var port = 8000;
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
+
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -14,8 +19,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Path: backend/routes/api.js
-app.post('/api/upload', function (req, res) {
+app.post('/api/upload', upload.single('image'), function (req, res, next) {
 	console.log('API works');
+	console.log(req.file);
+	console.log("req.body")
+	console.log(req.body)
 });
 
 

@@ -17,6 +17,15 @@ const CameraPreview = () => {
       canvas.height = video.videoHeight;
       canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
     }
+
+		const data = canvas.toDataURL('image/png');
+		var response = fetch('/api/upload', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ image: data })
+		})
     // Simulate asynchronous task (e.g., API call) with setTimeout
     setTimeout(() => {
       setLoading(false); // Set loading state to false after the task is done
@@ -46,18 +55,34 @@ const CameraPreview = () => {
   );
 };
 
+
+const UploadImage = () => {
+	
+
+	return (
+		<div>
+			<h2>Upload Image:</h2>
+			<form action="" method="post" encType="multipart/form-data">
+				<input type="file" name="image" />
+				<button type="submit">Upload</button>
+			</form>
+		</div>
+	)
+}
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         {/* Add the existing logo here */}
-        <img src="/foodi-logo.png" className="App-logo" alt="logo" />
+        <img id= "logo-top" src="/foodi-logo.png" className="App-logo" alt="logo" />
 
         {/* Add the CameraPreview component */}
         <CameraPreview />
 
         {/* Optional: Add other content */}
         <h1>Your Website Title</h1>
+				<UploadImage />
       </header>
     </div>
   );

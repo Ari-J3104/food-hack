@@ -19,6 +19,13 @@
   color: white;
 }
 
+#logo-top {
+	  margin-top: 100px; /* Increased spacing for a grandiose look */
+	  width: auto;
+	  height: 400px; /* Adjust the height as needed for a larger logo */
+
+}
+
 /* Style the loading image for spinning animation */
 .loading-image {
   width: 30px; /* Adjust the size as needed */
