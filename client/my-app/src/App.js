@@ -26,26 +26,31 @@ const CameraPreview = ({ onTakeScreenshot }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ image: data }),
-    });
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    })
+      .then(() => {
+        setLoading(false);
+        onTakeScreenshot(data);
+      })
+      .catch((error) => {
+        console.error('Error during API call:', error);
+        setLoading(false);
+      });
   };
 
-	useEffect(() => {
-		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-			navigator.mediaDevices.getUserMedia({
-				video: { facingMode: 'environment' } // Use the back camera
-			})
-				.then(stream => {
-					if (videoRef.current) {
-						videoRef.current.srcObject = stream;
-					}
-				})
-				.catch(err => alert('Please enable camera access'));
-		}
-	}, []);
+  useEffect(() => {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: { facingMode: 'environment' }, // Use the back camera
+        })
+        .then((stream) => {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        })
+        .catch((err) => alert('Please enable camera access'));
+    }
+  }, []);
 
   return (
     <div>
@@ -89,18 +94,8 @@ const UploadImage = () => {
 function App() {
   const [screenshot, setScreenshot] = useState(null);
 
-  const handleTakeScreenshot = () => {
-    const canvas = document.createElement('canvas');
-    const video = document.querySelector('video');
-
-    if (canvas && video) {
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-
-      const dataURL = canvas.toDataURL('image/png');
-      setScreenshot(dataURL);
-    }
+  const handleTakeScreenshot = (data) => {
+    setScreenshot(data);
   };
 
   const handleReturnToScan = () => {
