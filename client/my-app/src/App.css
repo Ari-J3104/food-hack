@@ -32,8 +32,9 @@
   animation: spin 1s linear infinite;
 }
 
-html, body {
-  overflow-x: hidden;
+/* Center the button and text */
+.text-center {
+  text-align: center;
 }
 
 /* Keyframes for spinning animation */

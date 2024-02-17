@@ -53,7 +53,7 @@ const CameraPreview = ({ onTakeScan }) => {
   }, []);
 
   return (
-    <div>
+    <div className="text-center">
       <h2>Video feed:</h2>
       <video
         ref={videoRef}
@@ -70,7 +70,7 @@ const CameraPreview = ({ onTakeScan }) => {
 
 const ScanDisplay = ({ scan, onReturnToLiveFeed }) => {
   return (
-    <div>
+    <div className="text-center">
       <h2>Scan:</h2>
       <img src={scan} alt="scan" style={{ maxWidth: '100%' }} />
       <p>Random text goes here.</p>
@@ -81,7 +81,7 @@ const ScanDisplay = ({ scan, onReturnToLiveFeed }) => {
 
 const UploadImage = () => {
   return (
-    <div>
+    <div className="text-center">
       <h2>Upload Image:</h2>
       <form action="" method="post" encType="multipart/form-data">
         <input type="file" name="image" />
