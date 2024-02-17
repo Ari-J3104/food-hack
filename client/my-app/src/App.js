@@ -1,6 +1,6 @@
 // App.js
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, setState } from 'react';
 import './App.css';
 
 const CameraPreview = ({ onTakeScan }) => {
@@ -20,20 +20,38 @@ const CameraPreview = ({ onTakeScan }) => {
     }
 
     const data = canvas.toDataURL('image/png');
-    fetch('/api/uploadScan', {
+	onTakeScan(data);
+	setLoading(false);
+    fetch('/api/uploadScreenshot', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ image: data }),
     })
-      .then(() => {
-        setLoading(false);
-        onTakeScan(data);
+      .then((res) => {
+		res.json().then(data => {
+			console.log(data)
+
+			var firstFood = data.foods[0];
+			console.log(firstFood);
+			this.setState({
+				itemName: firstFood.food_name,
+				servingSize: firstFood.serving_qty + " " + firstFood.serving_unit,
+				calories: firstFood.nf_calories,
+				totalFat: firstFood.nf_total_fat,
+				cholesterol: firstFood.nf_cholesterol,
+				protein: firstFood.nf_protein,
+				sodium: firstFood.nf_sodium,
+				carbs: firstFood.nf_total_carbohydrate,
+				sugars: firstFood.nf_sugars,
+				caffeine: firstFood.nf_caffeine,
+			
+			})
+		})
       })
       .catch((error) => {
         console.error('Error during API call:', error);
-        setLoading(false);
       });
   };
 
