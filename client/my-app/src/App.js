@@ -47,7 +47,7 @@ const CameraPreview = ({ onTakeScreenshot }) => {
   return (
     <div>
       <h2>Video feed:</h2>
-		  <video ref={videoRef} autoplay loop muted webkit-playsinline playsinline />
+		  <video ref={videoRef} autoPlay loop muted webkit-playsinline playsinline />
       <button onClick={onTakeScreenshot}>Take Screenshot</button>
     </div>
   );
