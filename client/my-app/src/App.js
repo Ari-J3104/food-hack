@@ -81,6 +81,7 @@ const ScanDisplay = ({ scan, onReturnToLiveFeed }) => {
 
 const NutritionFacts = () => {
   // Basic editable nutrition facts
+  const [itemName, getItemName] = useState(1); 
   const [servingSize, setServingSize] = useState(1);
   const [calories, setCalories] = useState(100);
   const [totalFat, setTotalFat] = useState('5g');
@@ -94,6 +95,7 @@ const NutritionFacts = () => {
 
   return (
     <div>
+	  <h2>Item: {itemName}</h2>
       <h3>Nutrition Facts</h3>
       <p>Serving Size: {servingSize}</p>
       <p>Calories: {calories}</p>
