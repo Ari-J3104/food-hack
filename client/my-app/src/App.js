@@ -68,13 +68,13 @@ const CameraPreview = ({ onTakeScan }) => {
   );
 };
 
-const ScanDisplay = ({ scan, onReturnToScan }) => {
+const ScanDisplay = ({ scan, onReturnToLiveFeed }) => {
   return (
     <div>
       <h2>Scan:</h2>
       <img src={scan} alt="scan" style={{ maxWidth: '100%' }} />
       <p>Random text goes here.</p>
-      <button onClick={onReturnToScan}>Return to Scan</button>
+      <button onClick={onReturnToLiveFeed}>Return to Live Feed</button>
     </div>
   );
 };
@@ -98,7 +98,7 @@ function App() {
     setScan(data);
   };
 
-  const handleReturnToScan = () => {
+  const handleReturnToLiveFeed = () => {
     setScan(null);
   };
 
@@ -109,7 +109,7 @@ function App() {
         <img id="logo-top" src="/foodi-logo.png" className="App-logo" alt="logo" />
 
         {scan ? (
-          <ScanDisplay scan={scan} onReturnToScan={handleReturnToScan} />
+          <ScanDisplay scan={scan} onReturnToLiveFeed={handleReturnToLiveFeed} />
         ) : (
           <CameraPreview onTakeScan={handleTakeScan} />
         )}
