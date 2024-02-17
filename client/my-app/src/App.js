@@ -73,8 +73,38 @@ const ScanDisplay = ({ scan, onReturnToLiveFeed }) => {
     <div className="text-center">
       <h2>Scan:</h2>
       <img src={scan} alt="scan" style={{ maxWidth: '100%' }} />
-      <p>Random text goes here.</p>
+      <NutritionFacts />
       <button onClick={onReturnToLiveFeed}>Return to Live Feed</button>
+    </div>
+  );
+};
+
+const NutritionFacts = () => {
+  // Basic editable nutrition facts
+  const [servingSize, setServingSize] = useState(1);
+  const [calories, setCalories] = useState(100);
+  const [totalFat, setTotalFat] = useState('5g');
+  const [cholesterol, setCholesterol] = useState('10mg');
+  const [protein, setProtein] = useState('10g');
+  const [sodium, setSodium] = useState('10mg');
+  const [carbs, setCarbs] = useState('10g');
+  const [sugars, setSugars] = useState('10g');
+  const [caffeine, setCaffeine] = useState('10mg');
+
+
+  return (
+    <div>
+      <h3>Nutrition Facts</h3>
+      <p>Serving Size: {servingSize}</p>
+      <p>Calories: {calories}</p>
+      <p>Total Fat: {totalFat}</p>
+      <p>Cholesterol: {cholesterol}</p>
+	  <p>Protein: {protein}</p>
+	  <p>Sodium: {sodium}</p>
+	  <p>Total Carbohydrates: {carbs}</p>
+	  <p>Sugars: {sugars}</p>
+	  <p>Caffeine: {caffeine}</p>
+      {/* Add more nutrition facts as needed */}
     </div>
   );
 };
