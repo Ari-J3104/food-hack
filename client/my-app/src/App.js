@@ -3,12 +3,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 
-const CameraPreview = ({ onTakeScreenshot }) => {
+const CameraPreview = ({ onTakeScan }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
-  const takeScreenshot = () => {
+  const takeScan = () => {
     setLoading(true);
     const canvas = canvasRef.current;
     const video = videoRef.current;
@@ -20,7 +20,7 @@ const CameraPreview = ({ onTakeScreenshot }) => {
     }
 
     const data = canvas.toDataURL('image/png');
-    fetch('/api/uploadScreenshot', {
+    fetch('/api/uploadScan', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const CameraPreview = ({ onTakeScreenshot }) => {
     })
       .then(() => {
         setLoading(false);
-        onTakeScreenshot(data);
+        onTakeScan(data);
       })
       .catch((error) => {
         console.error('Error during API call:', error);
@@ -61,18 +61,18 @@ const CameraPreview = ({ onTakeScreenshot }) => {
         playsInline
         style={{ maxWidth: '100%', width: '100%' }}
       />
-      <button onClick={takeScreenshot}>Take Screenshot</button>
+      <button onClick={takeScan}>Take Scan</button>
       {loading && <img src="/loading.png" alt="loading" className="loading-image" />}
       <canvas ref={canvasRef} style={{ display: 'none' }} />
     </div>
   );
 };
 
-const ScreenshotDisplay = ({ screenshot, onReturnToScan }) => {
+const ScanDisplay = ({ scan, onReturnToScan }) => {
   return (
     <div>
-      <h2>Screenshot:</h2>
-      <img src={screenshot} alt="screenshot" />
+      <h2>Scan:</h2>
+      <img src={scan} alt="scan" style={{ maxWidth: '100%' }} />
       <p>Random text goes here.</p>
       <button onClick={onReturnToScan}>Return to Scan</button>
     </div>
@@ -92,14 +92,14 @@ const UploadImage = () => {
 };
 
 function App() {
-  const [screenshot, setScreenshot] = useState(null);
+  const [scan, setScan] = useState(null);
 
-  const handleTakeScreenshot = (data) => {
-    setScreenshot(data);
+  const handleTakeScan = (data) => {
+    setScan(data);
   };
 
   const handleReturnToScan = () => {
-    setScreenshot(null);
+    setScan(null);
   };
 
   return (
@@ -108,10 +108,10 @@ function App() {
         {/* Add the existing logo here */}
         <img id="logo-top" src="/foodi-logo.png" className="App-logo" alt="logo" />
 
-        {screenshot ? (
-          <ScreenshotDisplay screenshot={screenshot} onReturnToScan={handleReturnToScan} />
+        {scan ? (
+          <ScanDisplay scan={scan} onReturnToScan={handleReturnToScan} />
         ) : (
-          <CameraPreview onTakeScreenshot={handleTakeScreenshot} />
+          <CameraPreview onTakeScan={handleTakeScan} />
         )}
 
         {/* Optional: Add other content */}
