@@ -1,4 +1,4 @@
-/* App.css */
+// App.css
 
 /* Style the existing logo */
 .App-logo {
@@ -17,6 +17,7 @@
   justify-content: center;
   font-size: calc(8px + 2vmin); /* Adjust font size as needed */
   color: white;
+  text-align: center; /* Center the text */
 }
 
 #logo-top {
@@ -32,9 +33,8 @@
   animation: spin 1s linear infinite;
 }
 
-/* Center the button and text */
-.text-center {
-  text-align: center;
+html, body {
+  overflow-x: hidden;
 }
 
 /* Keyframes for spinning animation */
