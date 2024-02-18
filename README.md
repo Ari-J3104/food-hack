@@ -3,6 +3,7 @@
 ## Letting outside devices access the server
 1. Install [ngrok](https://ngrok.com/download)
 2. Run `ngrok http 3000`
+3. Copy the url - this is the url for all external devices
 
 ## Launching the backend
 1. cd into the *backend* folder
