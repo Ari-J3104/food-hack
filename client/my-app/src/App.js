@@ -37,7 +37,6 @@ const handleFirstFoodChange = (data) => {
 			console.log(data)
 
 			var firstFood = data.foods[0];
-			console.log(firstFood);
 			handleFirstFoodChange(firstFood);
 		})
       })

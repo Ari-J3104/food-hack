@@ -15,19 +15,17 @@ const upload = multer({ dest: 'uploads/' });
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 
 // Path: backend/routes/api.js
-app.post('/api/uploadFile', upload.single('image'), function (req, res, next) {
-	console.log('API works');
-	console.log(req.file);
-	console.log("req.body")
-	console.log(req.body)
-});
+// app.post('/api/uploadFile', upload.single('image'), function (req, res, next) {
+// 	console.log('API works');
+// 	console.log(req.file);
+// 	console.log("req.body")
+// 	console.log(req.body)
+// });
 
 app.post('/api/uploadScreenshot', function (req, res) {
 	console.log('API works');
@@ -52,7 +50,7 @@ app.post('/api/uploadScreenshot', function (req, res) {
 				'x-app-key': process.env.NUTRITIONIX_API_KEY,
 			},
 			body: JSON.stringify({	
-				query: "coffee",
+				query: "pizza",
 			}),
 		}, function(error, response, body) {
 			res.status(200).send(body);		
