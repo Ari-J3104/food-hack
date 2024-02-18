@@ -176,7 +176,7 @@ function App() {
 		<NutritionFacts firstFood={firstFood} />
 
         {/* Optional: Add other content */}
-        <h1>By Wilson Huang and Aryan Jain</h1>
+        <h3>By Wilson Huang, Aryan Jain, and Michael Zheng</h3>
       </header>
     </div>
   );
