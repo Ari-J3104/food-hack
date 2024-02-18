@@ -1,5 +1,9 @@
 # food-hack
 
+## Letting outside devices access the server
+1. Install [ngrok](https://ngrok.com/download)
+2. Run `ngrok http 3000`
+
 ## Launching the backend
 1. cd into the *backend* folder
 2. run `npm i`
