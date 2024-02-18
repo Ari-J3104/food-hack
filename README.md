@@ -18,3 +18,8 @@ This server is running on port **8000**
 3. run `npm start`
 This client server is running on port **3000**
 This server has a proxy to the backend at _http://localhost:8000_
+
+## Lauching the python flask model
+1. cd into *AiTraining*
+2. Install all the dependencies (glhf)
+3. run `flask run`
