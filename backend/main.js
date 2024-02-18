@@ -52,7 +52,7 @@ app.post('/api/uploadScreenshot', function (req, res) {
 				'x-app-key': process.env.NUTRITIONIX_API_KEY,
 			},
 			body: JSON.stringify({	
-				query: "pizza",
+				query: "coffee",
 			}),
 		}, function(error, response, body) {
 			res.status(200).send(body);		

@@ -3,11 +3,14 @@
 import React, { useEffect, useRef, useState, setState } from 'react';
 import './App.css';
 
-const CameraPreview = ({ onTakeScan }) => {
+const CameraPreview = ({ onTakeScan, onFirstFoodChange }) => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
+const handleFirstFoodChange = (data) => {
+		onFirstFoodChange(data);
+	};
   const takeScan = () => {
     setLoading(true);
     const canvas = canvasRef.current;
@@ -35,19 +38,7 @@ const CameraPreview = ({ onTakeScan }) => {
 
 			var firstFood = data.foods[0];
 			console.log(firstFood);
-			this.setState({
-				itemName: firstFood.food_name,
-				servingSize: firstFood.serving_qty + " " + firstFood.serving_unit,
-				calories: firstFood.nf_calories,
-				totalFat: firstFood.nf_total_fat,
-				cholesterol: firstFood.nf_cholesterol,
-				protein: firstFood.nf_protein,
-				sodium: firstFood.nf_sodium,
-				carbs: firstFood.nf_total_carbohydrate,
-				sugars: firstFood.nf_sugars,
-				caffeine: firstFood.nf_caffeine,
-			
-			})
+			handleFirstFoodChange(firstFood);
 		})
       })
       .catch((error) => {
@@ -91,14 +82,16 @@ const ScanDisplay = ({ scan, onReturnToLiveFeed }) => {
     <div className="text-center">
       <h2>Scan:</h2>
       <img src={scan} alt="scan" style={{ maxWidth: '100%' }} />
-      <NutritionFacts />
+      
       <button onClick={onReturnToLiveFeed}>Return to Live Feed</button>
     </div>
   );
 };
 
-const NutritionFacts = () => {
+const NutritionFacts = ({firstFood}) => {
   // Basic editable nutrition facts
+  console.log("this is first food");
+  console.log(firstFood)
   const [itemName, getItemName] = useState(null); 
   const [servingSize, setServingSize] = useState(null);
   const [calories, setCalories] = useState(null);
@@ -108,7 +101,20 @@ const NutritionFacts = () => {
   const [sodium, setSodium] = useState('mg');
   const [carbs, setCarbs] = useState('g');
   const [sugars, setSugars] = useState('g');
-  const [caffeine, setCaffeine] = useState('mg');
+  
+	useEffect(() => {
+		if (firstFood) {
+			getItemName(firstFood.food_name);
+			setServingSize(firstFood.serving_qty + " " + firstFood.serving_unit);
+			setCalories(firstFood.nf_calories);
+			setTotalFat(firstFood.nf_total_fat);
+			setCholesterol(firstFood.nf_cholesterol);
+			setProtein(firstFood.nf_protein);
+			setSodium(firstFood.nf_sodium);
+			setCarbs(firstFood.nf_total_carbohydrate);
+			setSugars(firstFood.nf_sugars);
+		}
+	})
 
 
   return (
@@ -123,7 +129,6 @@ const NutritionFacts = () => {
 	  <p>Sodium: {sodium}</p>
 	  <p>Total Carbohydrates: {carbs}</p>
 	  <p>Sugars: {sugars}</p>
-	  <p>Caffeine: {caffeine}</p>
       {/* Add more nutrition facts as needed */}
     </div>
   );
@@ -142,7 +147,8 @@ const UploadImage = () => {
 };
 
 function App() {
-  const [scan, setScan] = useState(null);
+  	const [scan, setScan] = useState(null);
+	const [firstFood, setFirstFood] = useState(null);
 
   const handleTakeScan = (data) => {
     setScan(data);
@@ -151,7 +157,9 @@ function App() {
   const handleReturnToLiveFeed = () => {
     setScan(null);
   };
-
+	const onFirstFoodChange = (data) => {
+		setFirstFood(data);
+	};
   return (
     <div className="App">
       <header className="App-header">
@@ -161,8 +169,10 @@ function App() {
         {scan ? (
           <ScanDisplay scan={scan} onReturnToLiveFeed={handleReturnToLiveFeed} />
         ) : (
-          <CameraPreview onTakeScan={handleTakeScan} />
+          <CameraPreview onTakeScan={handleTakeScan} onFirstFoodChange={setFirstFood} />
+		  
         )}
+		<NutritionFacts firstFood={firstFood} />
 
         {/* Optional: Add other content */}
         <h1>By Wilson Huang and Aryan Jain</h1>
