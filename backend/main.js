@@ -53,6 +53,10 @@ app.post('/api/uploadScreenshot', function (req, res) {
 				query: "pizza",
 			}),
 		}, function(error, response, body) {
+			if (error) {
+				console.error('Error during API call:', error);
+				res.status(500).send('Error during API call');
+			}
 			res.status(200).send(body);		
 		})
 });
