@@ -35,7 +35,9 @@ const handleFirstFoodChange = (data) => {
       .then((res) => {
 		res.json().then(data => {
 			console.log(data)
-
+			if (!data) {
+				return;
+			}
 			var firstFood = data.foods[0];
 			handleFirstFoodChange(firstFood);
 		})
