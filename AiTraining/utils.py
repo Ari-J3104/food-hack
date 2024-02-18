@@ -1,14 +1,27 @@
 # File: utils.py
 import base64
+from PIL import Image, UnidentifiedImageError
 from io import BytesIO
 from PIL import Image
 import numpy as np
 
 def base64_to_pil_img(base64_img):
-    """Converts a Base64-encoded image to a PIL Image object."""
-    image_data = base64.b64decode(base64_img)
-    image = Image.open(BytesIO(image_data))
-    return image
+    """Converts a Base64-encoded image to a PIL Image object, handling potential padding and data URI prefix issues."""
+    # Check if this is a data URI and strip the prefix if present
+    if "base64," in base64_img:
+        base64_img = base64_img.split("base64,")[-1]
+    # Add padding if necessary to make the base64 string length divisible by 4
+    base64_img += "=" * ((4 - len(base64_img) % 4) % 4)
+    try:
+        image_data = base64.b64decode(base64_img)
+        image = Image.open(BytesIO(image_data))
+        return image
+    except UnidentifiedImageError as e:
+        print(f"Cannot identify image file: {e}")
+        return None  # or handle the error as you see fit
+    except base64.binascii.Error as e:
+        print(f"Base64 decoding error: {e}")
+        return None  # or handle the error as you see fit
 
 def prepare_image(image, target_size):
     """Preprocess the image for model prediction."""
