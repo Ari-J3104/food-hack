@@ -176,7 +176,6 @@ function App() {
 
         {/* Optional: Add other content */}
         <h1>By Wilson Huang and Aryan Jain</h1>
-        <UploadImage />
       </header>
     </div>
   );
