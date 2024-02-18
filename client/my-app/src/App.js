@@ -106,12 +106,12 @@ const NutritionFacts = ({firstFood}) => {
 			getItemName(firstFood.food_name);
 			setServingSize(firstFood.serving_qty + " " + firstFood.serving_unit);
 			setCalories(firstFood.nf_calories);
-			setTotalFat(firstFood.nf_total_fat);
-			setCholesterol(firstFood.nf_cholesterol);
-			setProtein(firstFood.nf_protein);
-			setSodium(firstFood.nf_sodium);
-			setCarbs(firstFood.nf_total_carbohydrate);
-			setSugars(firstFood.nf_sugars);
+			setTotalFat(firstFood.nf_total_fat + " g");
+			setCholesterol(firstFood.nf_cholesterol + " mg");
+			setProtein(firstFood.nf_protein + " g");
+			setSodium(firstFood.nf_sodium + " mg");
+			setCarbs(firstFood.nf_total_carbohydrate + " g");
+			setSugars(firstFood.nf_sugars + " g");
 		}
 	})
 
