@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/api/uploadScreenshot', function (req, res) {
 	console.log('API works');
-	request.post('http://149.125.139.72:5000/predict', {
+	request.post('http://127.0.0.1:5000/predict', {
 		json: {
 			image: req.body.image,
 		},
@@ -38,8 +38,7 @@ app.post('/api/uploadScreenshot', function (req, res) {
 			console.error('Error during API call:', error);
 			res.status(500).send('Error during API call');
 		} else {
-			console.log('API call successful');
-			console.log(body);
+			console.log('starting second post request');
 			request.post({
 				url: "https://trackapi.nutritionix.com/v2/natural/nutrients",
 
@@ -49,13 +48,16 @@ app.post('/api/uploadScreenshot', function (req, res) {
 					'x-app-key': process.env.NUTRITIONIX_API_KEY,
 				},
 				body: JSON.stringify({
-					query: "pizza",
+					query: body.prediction,
 				}),
 			}, function (error, response, body) {
 				if (error) {
 					console.error('Error during API call:', error);
 					res.status(500).send('Error during API call');
 				}
+
+				console.log('API call done');
+				console.log(body)
 				res.status(200).send(body);
 			})
 		};
