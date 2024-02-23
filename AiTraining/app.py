@@ -4,7 +4,9 @@ from tensorflow.keras.models import load_model
 import numpy as np
 
 app = Flask(__name__)
-model = load_model('C:/Users/whuan/Downloads/your_model.h5')
+
+# Load the pre-trained model here
+model = load_model('foodi_finetuned_model.h5')
 
 # Full list of class names for the Food-101 dataset
 class_names = [
